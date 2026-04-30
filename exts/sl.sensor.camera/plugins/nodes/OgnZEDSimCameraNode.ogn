@@ -48,7 +48,7 @@
       },
       "cameraModel": {
         "type": "string",
-        "description": "ZED Camera model. Can be either ZED_X, ZED_X_Mini",
+        "description": "ZED Camera model. Can be either ZED_X, ZED_X_Mini, ZED_2i",
         "default": "ZED_X"
       },
       "width": {
