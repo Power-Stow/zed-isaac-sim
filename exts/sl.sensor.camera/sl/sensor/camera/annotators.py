@@ -4,12 +4,12 @@
 import carb
 import omni.graph.core as og
 import omni.replicator.core as rep
-from omni.replicator.core.scripts.utils import viewport_manager
-from isaacsim.core.utils.prims import is_prim_path_valid, get_prim_at_path
 import omni.usd
+from isaacsim.core.utils.prims import get_prim_at_path, is_prim_path_valid
+from omni.replicator.core.scripts.utils import viewport_manager
 from omni.syntheticdata import SyntheticData, SyntheticDataStage
 
-from .utils import get_camera_model, is_stereo_camera, is_4mm_camera, get_resolution, get_focal_length, get_pixel_size
+from .utils import get_camera_model, get_focal_length, get_pixel_size, get_resolution, is_4mm_camera, is_stereo_camera
 
 # Shared across all streamer classes to ensure port uniqueness
 used_ports = set()
@@ -275,7 +275,7 @@ class ZEDAnnotator:
         self.sys_time.get_attribute("outputs:systemTime").connect(self.zed_.get_attribute("inputs:systemTime"), True)
 
         self.zed_.get_attribute("inputs:stream").set(value=True)
-        self.zed_.get_attribute("inputs:cameraModel").set("VIRTUAL_ZED_X" if self.custom_stereo else self.camera_model)
+        self.zed_.get_attribute("inputs:cameraModel").set("ZED_2i" if self.custom_stereo else self.camera_model)
         self.zed_.get_attribute("inputs:serialNumber").set(self.serial_number if self.serial_number else "-1")
 
         # connect sync node to zed node to trigger the stream

@@ -122,11 +122,11 @@ def get_camera_model(camera_model: str) -> str:
         camera_model: The full camera model name
 
     Returns:
-        The base camera model, defaults to "ZED_X" if not recognized
+        The base camera model, defaults to "ZED_2i" if not recognized
     """
     config = _CAMERA_CONFIGS.get(camera_model)
     if config is None:
-        return "ZED_X"
+        return "ZED_2i"
 
     return config["base_model"]
 
