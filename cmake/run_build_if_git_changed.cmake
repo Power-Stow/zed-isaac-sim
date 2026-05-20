@@ -10,8 +10,20 @@ if(NOT DEFINED ZED_STATE_FILE)
     message(FATAL_ERROR "ZED_STATE_FILE is required")
 endif()
 
+if(NOT DEFINED ZED_CONFIG_SOURCE_DIR)
+    message(FATAL_ERROR "ZED_CONFIG_SOURCE_DIR is required")
+endif()
+
+if(NOT DEFINED ZED_CONFIG_DEST_DIR)
+    message(FATAL_ERROR "ZED_CONFIG_DEST_DIR is required")
+endif()
+
 if(NOT EXISTS "${ZED_BUILD_SCRIPT}")
     message(FATAL_ERROR "Build script not found: ${ZED_BUILD_SCRIPT}")
+endif()
+
+if(NOT IS_DIRECTORY "${ZED_CONFIG_SOURCE_DIR}")
+    message(FATAL_ERROR "Config source directory not found: ${ZED_CONFIG_SOURCE_DIR}")
 endif()
 
 find_program(GIT_EXECUTABLE git)
@@ -81,18 +93,26 @@ endif()
 
 if(CURRENT_STATE STREQUAL PREVIOUS_STATE)
     message(STATUS "zed-isaac-sim unchanged (${CURRENT_STATE}); skipping build.sh")
-    return()
+else()
+    message(STATUS "zed-isaac-sim changed (${PREVIOUS_STATE} -> ${CURRENT_STATE}); running build.sh")
+
+    execute_process(
+        COMMAND "${ZED_BUILD_SCRIPT}"
+        WORKING_DIRECTORY "${ZED_SOURCE_DIR}"
+        RESULT_VARIABLE BUILD_RESULT
+    )
+    if(NOT BUILD_RESULT EQUAL 0)
+        message(FATAL_ERROR "zed-isaac-sim build.sh failed with exit code ${BUILD_RESULT}")
+    endif()
+
+    file(WRITE "${ZED_STATE_FILE}" "${CURRENT_STATE}\n")
 endif()
 
-message(STATUS "zed-isaac-sim changed (${PREVIOUS_STATE} -> ${CURRENT_STATE}); running build.sh")
-
-execute_process(
-    COMMAND "${ZED_BUILD_SCRIPT}"
-    WORKING_DIRECTORY "${ZED_SOURCE_DIR}"
-    RESULT_VARIABLE BUILD_RESULT
-)
-if(NOT BUILD_RESULT EQUAL 0)
-    message(FATAL_ERROR "zed-isaac-sim build.sh failed with exit code ${BUILD_RESULT}")
+file(MAKE_DIRECTORY "${ZED_CONFIG_DEST_DIR}")
+file(GLOB ZED_CONFIG_FILES "${ZED_CONFIG_SOURCE_DIR}/*.conf")
+if(ZED_CONFIG_FILES)
+    file(COPY ${ZED_CONFIG_FILES} DESTINATION "${ZED_CONFIG_DEST_DIR}")
+    message(STATUS "Synced ZED config files to ${ZED_CONFIG_DEST_DIR}")
+else()
+    message(WARNING "No .conf files found in ${ZED_CONFIG_SOURCE_DIR}")
 endif()
-
-file(WRITE "${ZED_STATE_FILE}" "${CURRENT_STATE}\n")

@@ -116,3 +116,11 @@ When built as the ROS 2 package `zed_isaac_sim`, the CMake wrapper computes a gi
 - hash of untracked file contents (`git ls-files --others --exclude-standard` + `git hash-object`)
 
 `build.sh` runs only when this fingerprint changes.
+
+During the same colcon build step, `.conf` files from:
+
+- `exts/sl.sensor.camera/data/config`
+
+are copied to:
+
+- `/usr/local/zed/settings`
