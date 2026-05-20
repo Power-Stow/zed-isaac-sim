@@ -5,21 +5,27 @@ project(zed_isaac_sim)
 find_package(ament_cmake REQUIRED)
 
 set(ZED_BUILD_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/build.sh")
-set(ZED_BUILD_STAMP "${CMAKE_CURRENT_BINARY_DIR}/zed_isaac_sim_build.stamp")
+set(ZED_BUILD_HELPER_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/cmake/run_build_if_git_changed.cmake")
+set(ZED_BUILD_STATE_FILE "${CMAKE_CURRENT_BINARY_DIR}/zed_isaac_sim_build_state.txt")
 
 if(NOT EXISTS "${ZED_BUILD_SCRIPT}")
     message(FATAL_ERROR "Expected build script not found: ${ZED_BUILD_SCRIPT}")
 endif()
 
-add_custom_command(OUTPUT "${ZED_BUILD_STAMP}"
-                   COMMAND "${ZED_BUILD_SCRIPT}"
-                   COMMAND "${CMAKE_COMMAND}" -E touch "${ZED_BUILD_STAMP}"
-                   WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-                   COMMENT "Building zed-isaac-sim via build.sh"
-                   VERBATIM
-)
+if(NOT EXISTS "${ZED_BUILD_HELPER_SCRIPT}")
+    message(FATAL_ERROR "Expected helper script not found: ${ZED_BUILD_HELPER_SCRIPT}")
+endif()
 
-add_custom_target(build_zed_isaac_sim ALL DEPENDS "${ZED_BUILD_STAMP}")
+add_custom_target(build_zed_isaac_sim ALL
+                  COMMAND "${CMAKE_COMMAND}"
+                          -DZED_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}
+                          -DZED_BUILD_SCRIPT=${ZED_BUILD_SCRIPT}
+                          -DZED_STATE_FILE=${ZED_BUILD_STATE_FILE}
+                          -P "${ZED_BUILD_HELPER_SCRIPT}"
+                  WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
+                  COMMENT "Conditionally building zed-isaac-sim via build.sh when git state changes"
+                  VERBATIM
+)
 
 install(FILES package.xml DESTINATION share/${PROJECT_NAME})
 

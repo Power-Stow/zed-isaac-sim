@@ -107,3 +107,12 @@ In order to do that, a calibration step is required.
 - You also need to set the serial number chosen during the calibration process.
 
 <img src="imgs/virtual_stereo_graph.gif">
+## Colcon Integration
+
+When built as the ROS 2 package `zed_isaac_sim`, the CMake wrapper computes a git-based fingerprint before running `build.sh`:
+
+- current `HEAD` commit hash (`git rev-parse HEAD`)
+- hash of tracked file changes (`git diff --binary HEAD`)
+- hash of untracked file contents (`git ls-files --others --exclude-standard` + `git hash-object`)
+
+`build.sh` runs only when this fingerprint changes.
