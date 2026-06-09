@@ -126,7 +126,7 @@ def get_camera_model(camera_model: str) -> str:
     """
     config = _CAMERA_CONFIGS.get(camera_model)
     if config is None:
-        return "ZED_2i"
+        return "ZED_X"
 
     return config["base_model"]
 
