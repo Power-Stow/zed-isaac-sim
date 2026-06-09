@@ -109,7 +109,7 @@ In order to do that, a calibration step is required.
 <img src="imgs/virtual_stereo_graph.gif">
 ## Colcon Integration
 
-When built as the ROS 2 package `zed_isaac_sim`, the CMake wrapper computes a git-based fingerprint before running `build.sh`:
+When built as the ROS 2 package `zed_isaac_sim`, the CMake wrapper only runs `build.sh` if a git-based fingerprint has changed. The fingerprint is based on:
 
 - current `HEAD` commit hash (`git rev-parse HEAD`)
 - hash of tracked file changes (`git diff --binary HEAD`)
