@@ -29,7 +29,7 @@ The ZED camera extension streams your virtual ZED camera data to the ZED SDK.
 <img src="imgs/add_ext.png">
 <br><br>
 
-5. Enable the `ZED Camera` extension in the Third-Party tab.
+1. Enable the `ZED Camera` extension in the Third-Party tab.
 
 <img src="imgs/zed_camera_ext_isaac.png">
 <br><br>
@@ -41,7 +41,7 @@ Then, In your scene,
 <img src="imgs/zed_x_usd.png">
 <br><br>
 
-2. Create a new Action Graph similar to this :
+1. Create a new Action Graph similar to this :
 
 <img src="imgs/action_graph_zed.png">
 
@@ -52,7 +52,6 @@ Then, In your scene,
 Note : the **serial number** input is only used for Virtual stereo cameras
 <img src="imgs/zed_camera_one_helper.png">
 
-
 ### Using IPC
 
 It is now possible to stream images to the ZED SDK using IPC instead of RTSP.
@@ -61,7 +60,6 @@ This feature is only available on Linux and only when streaming to the same mach
 To use IPC:
 
 - In the action graph, enable the "IPC" option in the ZED Camera Helper node. It is enabled by default.
-
 
 <img src="imgs/enable_ipc.png">
 
@@ -85,7 +83,6 @@ For example, in ZED Explorer:
 
 <img src="imgs/stream_ipc_zed_explorer.png">
 
-
 ## Create a Virtual stereo Camera
 
 It is also possible to create what we call "Virtual stereo cameras" by pairing two ZED X One cameras together.
@@ -102,8 +99,23 @@ In order to do that, a calibration step is required.
 <img src="imgs/zed_calibration_full.gif">
 <br><br>
 
-
 - Then, in your action graph, add a `ZED Camera One Helper` and set the left and right cameras.
 - You also need to set the serial number chosen during the calibration process.
 
 <img src="imgs/virtual_stereo_graph.gif">
+
+## Colcon Integration
+
+When built as the ROS 2 package `zed_isaac_sim`, the CMake wrapper only runs `build.sh` if a git-based fingerprint has changed. The fingerprint is based on:
+
+- current `HEAD` commit hash (`git rev-parse HEAD`)
+- hash of tracked file changes (`git diff --binary HEAD`)
+- hash of untracked file contents (`git ls-files --others --exclude-standard` + `git hash-object`)
+
+During the same colcon build step, `.conf` files from:
+
+- `exts/sl.sensor.camera/data/config`
+
+are copied to:
+
+- `/usr/local/zed/settings`

@@ -29,7 +29,7 @@ def OmniGraph "TestGraph"
             docs="""Size (in bytes) of the buffer (0 if the input is a texture)"""
         )
         custom string inputs:cameraModel = "ZED_X" (
-            docs="""ZED Camera model. Can be either ZED_X, ZED_X_Mini"""
+            docs="""ZED Camera model. Can be either ZED_X, ZED_X_Mini, ZED_2i"""
         )
         custom uint inputs:chunkSize = 4096 (
             docs="""streaming chunk size (in bytes). Only used for network transport layer mode (not IPC)"""

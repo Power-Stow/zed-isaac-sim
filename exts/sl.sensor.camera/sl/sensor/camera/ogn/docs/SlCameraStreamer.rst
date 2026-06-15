@@ -37,7 +37,7 @@ Inputs
 
     "Streaming Bitrate (*inputs:bitrate*)", "``uint``", "Bitrate in Kbps. (Used only if IPC is disabled)", "8000"
     "Camera Model (*inputs:cameraModel*)", "``token``", "ZED Camera model.", "ZED_X"
-    "", "Metadata", "*allowedTokens* = ZED_X,ZED_XM,ZED_X_4MM,ZED_XM_4MM", ""
+    "", "Metadata", "*allowedTokens* = ZED_2i,ZED2iM,ZED_X,ZED_XM,ZED_X_4MM,ZED_XM_4MM", ""
     "ZED Camera Prim (*inputs:cameraPrim*)", "``target``", "ZED Camera prim used to stream data.", "None"
     "", "Metadata", "*literalOnly* = 1", ""
     "", "Metadata", "*allowMultiInputs* = 0", ""
