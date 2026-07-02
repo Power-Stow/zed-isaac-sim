@@ -49,6 +49,10 @@ _ZED2i_SPECIFICATIONS = {
         "resolution": [1920, 1080],
         "focal_length": {"standard": 1060, "4mm": 2000}
     },
+    "HD720": {
+        "resolution": [1280, 720],
+        "focal_length": {"standard": 706.6667, "4mm": 1333.3333}
+    },
     "SVGA": {
         "resolution": [960, 600],
         "focal_length": {"standard": 530, "4mm": 1000}

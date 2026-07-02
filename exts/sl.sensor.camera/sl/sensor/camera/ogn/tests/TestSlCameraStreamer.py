@@ -93,6 +93,7 @@ class TestOgn(ogts.OmniGraphTestCase):
         actual_value = og.Controller.get(attribute)
         ogts.verify_values(expected_value, actual_value, _attr_error(attribute, True))
         ogts.verify_values(expected_value, db_value, _attr_error(attribute, False))
+        self.assertIn("HD720", attribute.get_metadata("allowedTokens"))
 
         self.assertTrue(test_node.get_attribute_exists("inputs:streamingPort"))
         attribute = test_node.get_attribute("inputs:streamingPort")
