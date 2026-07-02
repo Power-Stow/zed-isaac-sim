@@ -45,7 +45,7 @@ Inputs
     "ExecIn (*inputs:execIn*)", "``execution``", "Triggers execution", "0"
     "FPS (*inputs:fps*)", "``uint``", "Camera stream frame rate.", "30"
     "Resolution (*inputs:resolution*)", "``token``", "Camera stream resolution.", "HD1200"
-    "", "Metadata", "*allowedTokens* = HD1200,HD1080,SVGA", ""
+    "", "Metadata", "*allowedTokens* = HD1200,HD1080,HD720,SVGA", ""
     "Streaming Port (*inputs:streamingPort*)", "``uint``", "Unique port per camera.", "30000"
     "Transport layer mode (*inputs:transportLayerMode*)", "``token``", "Communication protocol used to send data to the ZED SDK. IPC (Only available on Linux)improves streaming performances when streaming to the same machine", "BOTH"
     "", "Metadata", "*allowedTokens* = BOTH,NETWORK,IPC", ""
